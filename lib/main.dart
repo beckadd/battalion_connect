@@ -1,15 +1,13 @@
 import 'package:battalion_connect/apis/auth.dart';
-import 'package:battalion_connect/screens/Login.dart';
-import 'package:battalion_connect/screens/Summary.dart';
+
+import 'screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const BN_CONNECT());
 }
@@ -20,9 +18,16 @@ class BN_CONNECT extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Battalion Connect',
-      home: Navigator(pages: [MaterialPage(child: Summary())],)
-    );
+    return MaterialApp(
+        title: 'Battalion Connect',
+        initialRoute: userLoggedIn() ? Summary.route : Login.route,
+        routes: {
+          Summary.route: (context) => Summary(),
+          Login.route: (context) => Login(),
+          Post.route: (context) => Post(),
+          Inventory.route: (context) => Inventory()
+        });
   }
 }
+
+//TODO: Setup all navigation: how do you do this?
